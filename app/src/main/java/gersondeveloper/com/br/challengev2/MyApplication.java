@@ -19,12 +19,14 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //Initialize Realm
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this)
+        Realm.init(this);
+
+        /*RealmConfiguration realmConfig = new RealmConfiguration.Builder(this)
                 .deleteRealmIfMigrationNeeded()
                 .build();
 
         Realm.setDefaultConfiguration(realmConfig);
-
+*/
         Stetho.initializeWithDefaults(this);
     }
 }
