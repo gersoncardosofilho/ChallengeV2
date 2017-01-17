@@ -8,11 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.realm.RealmObject;
+
 /**
  * Created by gerso on 01/10/2016.
  */
 
-public class Payment implements Serializable {
+public class Payment extends RealmObject implements Serializable {
 
 
     @SerializedName("Id")

@@ -2,6 +2,7 @@ package gersondeveloper.com.br.challengev2.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -27,8 +28,6 @@ import android.widget.TextView;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
-import org.w3c.dom.Text;
-
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,12 +35,12 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
-import gersondeveloper.com.br.challengev2.Data.DBHelper;
 import gersondeveloper.com.br.challengev2.Model.Payment;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
 import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,7 +61,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     SimpleDateFormat sf;
     View root;
 
-    DBHelper dbHelper;
+    private Realm realm;
+
 
     @BindView(R.id.confirmaTextViewProductName)
     TextView textViewProductName;
@@ -157,6 +157,12 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        realm = Realm.getDefaultInstance();
+    }
+
     /**
      * Called to have the fragment instantiate its user interface view.
      * This is optional, and non-graphical fragments can return null (which
@@ -203,13 +209,6 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         }
         
         return view;
-    }
-
-    private DBHelper getHelper() {
-        if (dbHelper == null) {
-            dbHelper = OpenHelperManager.getHelper(activity.getApplicationContext(),DBHelper.class);
-        }
-        return dbHelper;
     }
 
     @Override
@@ -267,14 +266,14 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         progressBar.setVisibility(View.VISIBLE);
         textViewconfirmaAguarde.setVisibility(View.VISIBLE);
         //grava dados o banco para futuro cancelamento de compra se necessario
-        try
-        {
-            final Dao<Transaction, Integer> transactionDAO = getHelper().getTransactionDAO();
-            transactionDAO.create(transaction);
 
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Transaction transaction = realm.createObject(Transaction.class, transactionSender);
+            }
+        });
+
         //envia transacao para o webservice
         Payment payment = Payment.Create(transactionSender, transaction, calendar, sf);
         RestClient.getInstance().registerPayment(payment, registerPayment);
@@ -326,15 +325,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(dbHelper != null)
-        {
-            OpenHelperManager.releaseHelper();
-            dbHelper = null;
-        }
-    }
+
 
     @Override
     public void onResume() {

@@ -31,12 +31,12 @@ import java.util.List;
 import java.util.Map;
 
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
-import gersondeveloper.com.br.challengev2.Data.DBHelper;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
 import gersondeveloper.com.br.challengev2.Model.Payment;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,8 +53,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     Boolean registroApagado;
     View root;
 
+    private Realm realm;
+
     private Dao<Transaction, Integer> transactionDAO;
-    private DBHelper dbHelper;
+
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -82,6 +85,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public TransactionAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        realm = Realm.getDefaultInstance();
+
         this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.compras_layout, parent, false);
         root = view.findViewById(R.id.compras_layout);
@@ -149,7 +155,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             Log.d("onResponse", "idPayment: " + idPayment);
 
             try {
-                transactionDAO = getHelper().getTransactionDAO();
+                //transactionDAO = getHelper().getTransactionDAO();
 
                 //debug//
                 final List<Transaction> transactions = transactionDAO.queryForAll();
@@ -211,22 +217,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
     }
 
-    private DBHelper getHelper() {
-        if (dbHelper == null) {
-            dbHelper = OpenHelperManager.getHelper(activity.getApplicationContext(), DBHelper.class);
-        }
-        return dbHelper;
-    }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        if(dbHelper != null)
-        {
-            OpenHelperManager.releaseHelper();
-            dbHelper = null;
-        }
-    }
 
     @Override
     public int getItemCount() {

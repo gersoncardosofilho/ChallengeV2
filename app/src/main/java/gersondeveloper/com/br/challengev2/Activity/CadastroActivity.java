@@ -24,6 +24,7 @@ import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
+import io.realm.Realm;
 import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,11 +62,14 @@ public class CadastroActivity extends AppCompatActivity {
     @BindView(R.id.editTextEmail)
     EditText email;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
         ButterKnife.bind(this);
+
         root = (RelativeLayout) findViewById(R.id.activity_cadastro);
     }
 
