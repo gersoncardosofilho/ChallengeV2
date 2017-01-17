@@ -7,6 +7,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by gerso on 09/10/2016.
@@ -21,25 +22,22 @@ public class Transaction extends RealmObject implements Parcelable {
     public static final String USERNAME = "username";
     public static final String ID_PAYMENT = "id_payment";
 
-    @DatabaseField(generatedId = true, columnName = ID_TRANSACTION)
+    @PrimaryKey
     public int idTransaction;
 
-    @DatabaseField(columnName = USERNAME)
+
     public String username;
 
-    @DatabaseField(columnName = "email")
+
     public String email;
 
-    @DatabaseField(columnName = "product_name")
+
     public String productName;
 
-    @DatabaseField(columnName = ID_PAYMENT)
     public String idPayment;
 
-    @DatabaseField(columnName = "product_value")
     public Double productValue;
 
-    @DatabaseField(columnName = "product_image")
     public int productImage;
 
 

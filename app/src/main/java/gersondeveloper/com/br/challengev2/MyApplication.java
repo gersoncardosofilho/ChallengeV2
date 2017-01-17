@@ -21,12 +21,12 @@ public class MyApplication extends Application {
         //Initialize Realm
         Realm.init(this);
 
-        /*RealmConfiguration realmConfig = new RealmConfiguration.Builder(this)
+        RealmConfiguration realmConfig = new RealmConfiguration
+                .Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build();
 
         Realm.setDefaultConfiguration(realmConfig);
-*/
         Stetho.initializeWithDefaults(this);
     }
 }
