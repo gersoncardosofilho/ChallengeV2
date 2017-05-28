@@ -41,7 +41,6 @@ public class ComprasAdapter extends RecyclerView.Adapter<ComprasAdapter.MyViewHo
         ImageView imageViewProduct;
         TextView textIdPayment;
         Button cancelaCompraButton;
-        CardView cardview;
 
         public MyViewHolder(View itemView)
         {

@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestClient {
 
     private static final String TAG = "RestClient";
-    private static final String BASE_URL = "http://apis.gersondeveloper.com/Clientes/";
+    private static final String BASE_URL = "http://gersondeveloper-com.umbler.net/";
     private static final int TIMEOUT = 60000;
 
     private static RestClient instance;

@@ -38,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
     private Button loginButton, registerButton;
 
+
+
     View root;
 
     @BindView(R.id.login_edit_text_username)
@@ -121,8 +123,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-
-
             progressbar.setVisibility(View.VISIBLE);
 
             Map<String,String> data = new HashMap<>();
@@ -130,12 +130,8 @@ public class LoginActivity extends AppCompatActivity {
             data.put("password", password);
 
             RestClient.getInstance().getUserLogin(data, loginCallback);
-
-
         }
-
     }
-
 
 
     private Callback<User> loginCallback = new Callback<User>() {

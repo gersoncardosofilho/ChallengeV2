@@ -38,7 +38,6 @@ public class FragmentCompras extends Fragment {
     public static final String FRAG_ID = "fragment_opcoes";
     public static final String TAG = FragmentOpcoes.class.getName();
 
-    GridLayoutManager gridLayoutManager;
     LinearLayoutManager linearLayoutManage;
     FragmentActivity activity;
 
@@ -62,7 +61,7 @@ public class FragmentCompras extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compras, container,false);
         ButterKnife.bind(this, view);
-        gridLayoutManager = new GridLayoutManager(activity,1);
+
         linearLayoutManage = new LinearLayoutManager(activity, 1, false);
         recyclerView.setLayoutManager(linearLayoutManage);
 
@@ -77,29 +76,29 @@ public class FragmentCompras extends Fragment {
         return view;
     }
 
-   /* public ArrayList<Transaction> getTransactions()
-    {
-            ArrayList<Transaction> transactions = new ArrayList<>();
+//   public ArrayList<Transaction> getTransactions()
+//    {
+//            ArrayList<Transaction> transactions = new ArrayList<>();
+//
+//
+//            try {
+//                transactionDAO = getHelper().getTransactionDAO();
+//                final QueryBuilder<Transaction, Integer> queryBuilder = transactionDAO.queryBuilder();
+//                queryBuilder.where().eq(Transaction.USERNAME, username);
+//                final PreparedQuery<Transaction> preparedQuery = queryBuilder.prepare();
+//                final Iterator<Transaction> transactionIterator = transactionDAO.query(preparedQuery).iterator();
+//                while(transactionIterator.hasNext())
+//                {
+//                    final Transaction transaction1 = transactionIterator.next();
+//                    transactions.add(transaction1);
+//                }
+//
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//            return transactions;
+//        }
 
-
-            try {
-                transactionDAO = getHelper().getTransactionDAO();
-                final QueryBuilder<Transaction, Integer> queryBuilder = transactionDAO.queryBuilder();
-                queryBuilder.where().eq(Transaction.USERNAME, username);
-                final PreparedQuery<Transaction> preparedQuery = queryBuilder.prepare();
-                final Iterator<Transaction> transactionIterator = transactionDAO.query(preparedQuery).iterator();
-                while(transactionIterator.hasNext())
-                {
-                    final Transaction transaction1 = transactionIterator.next();
-                    transactions.add(transaction1);
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return transactions;
-        }
-*/
 
 
 }
